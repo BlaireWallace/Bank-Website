@@ -9,21 +9,59 @@ FONT_NAME = "Courier"
 
 
 # ----- NEW USER FUNCTIONS -------------------- #
-def create_username():
-    fgdf
+
+# Allow the user to create their own username
+def create_username(event):
+    special_chars = ["[", "]", "{", "}", "-", "_"]
+    username = userNameVar.get()
+
+    # Check if username is certain length and contains certain characters
+    if len(username) >= 10:
+        if username[0].isupper() == True:
+            if " " not in username:
+                print("First charcter is uppercase, is long, has no spaces")
+                return True
+            else:
+                messagebox.showinfo(title="Invalid Username", message="Username must be 10 characters long, first letter must be upper case, have no spaces")
+                return False
+        else:
+            messagebox.showinfo(title="Invalid Username", message="Username must be 10 characters long, first letter must be upper case, have no spaces")
+            return False
+    else:
+        messagebox.showinfo(title="Invalid Username", message="Username must be 10 characters long, first letter must be upper case, have no spaces")
+        return False
 
 
-def create_password():
-    dfdf
+# Allow the user to create their own password
+def create_password(event):
+    password = passwordVar.get()
+    if len(password) >= 12:
+        if password[0].isupper() == True:
+            if " " not in password:
+                if any(char.isdigit() for char in password):
+                    if (char.isaplpha >= 10 for char in password):
+                        print("All conditions met")
+                        return True
+                    else:
+                        messagebox.showinfo(title="Invalid Password", message="Password must be 12 characters long, first letter must be upper case, have no spaces, contain 1 number, contain 1 special character")
+                        return False
+                
 
 
+
+# Will check if create user name and password functions return true (map to sign up button)
+def check_credentials():
+    fdf
+
+
+# IF the check credentials function is passed then it will give the user a unique id
 def create_ID():
     dfdf
 
 # ----------- UI SETUP --------------------- #
 window = ttk.Window()
 window.title("Bank Website")
-window.geometry("2000x1500")
+window.geometry("1000x750")
 window.resizable(False, False)
 
 
@@ -38,30 +76,28 @@ username_website = ttk.Label(text="Username:")
 password_website = ttk.Label(text="Password:")
 
 
-# Entrys
-entry_username = ttk.Entry(width = 21)
-entry_password = ttk.Entry(width = 21)
+# Entry
+userNameVar = tk.StringVar()
+passwordVar = tk.StringVar()
+
+entry_username = ttk.Entry(width = 21,textvariable=userNameVar)
+entry_username.bind("<Return>", create_username)
+
+
+
+entry_password = ttk.Entry(width = 21, textvariable=passwordVar)
+entry_password.bind("<Return>", create_password)
 
 # Buttons
 sign_up_btn = ttk.Button(text="Sign Up", width=10)
 
-# Places widgets to the window
 
-# menu_title.grid(row = 10, column = 0)
-
-# username_website.grid(row = 0, column = 0)
-# entry_username.grid(row = 0, column = 1)
-# password_website.grid(row = 1, column = 0)
-# entry_password.grid(row = 1, column = 1)
-
-# sign_up_btn.grid(row = 4, column = 4)
-
-
-# window.rowconfigure(10)
-# window.columnconfigure(10)
-
-menu_title.pack()
-username_website.pack()
+menu_title.pack(expand=True)
+username_website.pack(expand=True)
+entry_username.pack(expand=True)
+password_website.pack(expand=True)
+entry_password.pack(expand=True)
+sign_up_btn.pack(expand=True)
 
 
 
